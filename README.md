@@ -16,13 +16,15 @@ mysql:
         - {name: "test", port: 13306}
 ```
 
+- Get the package using `go get github.com/ncrypthic/goconf` or `glide get github.com/ncrypthic/goconf`
+
 - Import the module
 ```golang
 package main
 
 import (
     "fmt"
-    "github.com/salestock/ssource/shared-libs/go/config"
+    "github.com/ncrypthic/goconf"
 )
 ```
 
@@ -55,10 +57,10 @@ func main() {
 }
 ```
 
-- The module will search for environment variables with prefix `SS_` followed by configuration path (all uppercased and any `.` in path must be replaced by `_`)
+- The module will search for environment variables with prefix `CONF_` followed by configuration path (all uppercased and any `.` in path must be replaced by `_`)
 
 ```sh
-SS_MYSQL_USERNAME="test" go run main.go
+CONF_MYSQL_USERNAME="test" go run main.go
 ```
 
 will give output:

@@ -1,0 +1,44 @@
+package config
+
+import (
+	"testing"
+)
+
+func TestJsonStringConfig(t *testing.T) {
+	type testStringConfig struct {
+		SomeHostname string  `config:"test.hostname"`
+		Port         float64 `config:"test.port"`
+	}
+	c := new(testStringConfig)
+	Setup("json", "CONF")
+	GetConfig(c)
+	if c.SomeHostname != "127.0.0.1" {
+		t.Errorf("c.SomeHostname == %q, want %q", c.SomeHostname, "127.0.0.1")
+	}
+	if c.Port != 3126 {
+		t.Errorf("c.Port == %d, want %d", c.Port, 3126)
+	}
+}
+
+func TestJsonMapConfig(t *testing.T) {
+	type testMapConfig struct {
+		SomeMap []interface{} `config:"test.map"`
+	}
+	c := new(testMapConfig)
+	Setup("json", "CONF")
+	GetConfig(c)
+	if len(c.SomeMap) == 0 {
+		t.Errorf("Failed to get config value of `c.Somemap`")
+	}
+	for i, elmt := range c.SomeMap {
+		switch obj := elmt.(type) {
+		case map[interface{}]interface{}:
+			if v, ok := obj["name"]; !ok || v != "example" {
+				t.Errorf("map[%d][%q] = \"%q\", want %q", i, "name", v, "example")
+			}
+			if v, ok := obj["port"]; !ok || v != 3127 {
+				t.Errorf("map[%d][%q] = %d, want %d", i, "port", v, 3127)
+			}
+		}
+	}
+}

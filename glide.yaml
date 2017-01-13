@@ -1,0 +1,3 @@
+package: github.com/ncrypthic/goconf
+import:
+- package: github.com/spf13/viper

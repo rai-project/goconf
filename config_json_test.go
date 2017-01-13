@@ -1,4 +1,4 @@
-package config
+package goconf
 
 import (
 	"testing"

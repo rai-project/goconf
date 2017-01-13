@@ -1,7 +1,7 @@
 // Read configuration from files which may be overriden by envar value
 // with prefix. To override nested yaml value with envar, replace
 // its path with an underscore.
-package config
+package goconf
 
 import (
 	"github.com/spf13/viper"

@@ -5,6 +5,7 @@ package goconf
 
 import (
 	"github.com/spf13/viper"
+	"path/filepath"
 	"reflect"
 	"strings"
 )
@@ -87,4 +88,9 @@ func Setup(fileType string, prefix string) {
 	config.AutomaticEnv()
 	config.SetEnvPrefix(prefix)
 	config.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+}
+
+func FromFile(filename string, prefix string) {
+	Setup(strings.Replace(filepath.Ext(filename), ".", "", 1), prefix)
+	config.SetConfigFile(filename)
 }

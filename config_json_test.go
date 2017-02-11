@@ -11,7 +11,7 @@ func TestJsonStringConfig(t *testing.T) {
 	}
 	c := new(testStringConfig)
 	Setup("json", "CONF")
-	GetConfig(c)
+	Fill(c)
 	if c.SomeHostname != "127.0.0.1" {
 		t.Errorf("c.SomeHostname == %q, want %q", c.SomeHostname, "127.0.0.1")
 	}
@@ -26,7 +26,7 @@ func TestJsonMapConfig(t *testing.T) {
 	}
 	c := new(testMapConfig)
 	Setup("json", "CONF")
-	GetConfig(c)
+	Fill(c)
 	if len(c.SomeMap) == 0 {
 		t.Errorf("Failed to get config value of `c.Somemap`")
 	}

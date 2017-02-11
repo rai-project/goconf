@@ -71,14 +71,14 @@ func ExampleGetConfig() {
 	type InvalidMapConfig struct{}
 	c := StringConfig{SomeMap: make([]SubConfig, 1)}
 	Setup("yaml", "CONF") // Or Setup("json")
-	GetConfig(&c)
+	Fill(&c)
 	fmt.Println(c.SomeHostname)
 	fmt.Println(c.Port)
 	fmt.Println(c.Overriden)
 	fmt.Println(c.SomeMap)
 	fmt.Println(c.SomeMap[0].Invalid)
 	i := InvalidConfig{}
-	GetConfig(&i)
+	Fill(&i)
 	fmt.Printf(i.Invalid)
 	// Output:
 	// 127.0.0.1

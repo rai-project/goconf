@@ -4,15 +4,14 @@
 package goconf
 
 import (
-	"github.com/spf13/viper"
 	"path/filepath"
 	"reflect"
 	"strings"
+
+	"github.com/spf13/viper"
 )
 
 const tagName = "config"
-
-var config *viper.Viper
 
 func buildConfiguration(reflection reflect.Value, configValue interface{}) {
 	if reflection.IsValid() && reflection.Kind() == reflect.Struct {
@@ -28,7 +27,7 @@ func buildConfiguration(reflection reflect.Value, configValue interface{}) {
 			}
 			var conf interface{}
 			if configValue == nil {
-				conf = config.Get(configTag)
+				conf = viper.Get(configTag)
 			} else {
 				conf = configValue
 			}
@@ -68,8 +67,8 @@ func buildConfiguration(reflection reflect.Value, configValue interface{}) {
 	}
 }
 
-func GetConfig(class interface{}) {
-	err := config.ReadInConfig()
+func Fill(class interface{}) {
+	err := viper.ReadInConfig()
 	if err != nil {
 		panic("Cannot find configuration file (config.yaml) " + err.Error())
 	}
@@ -79,18 +78,17 @@ func GetConfig(class interface{}) {
 }
 
 func Setup(fileType string, prefix string) {
-	config = viper.New()
-	config.SetConfigName("config")
-	config.AddConfigPath(".")
-	config.AddConfigPath("conf")
-	config.AddConfigPath("config")
-	config.SetConfigType(fileType)
-	config.AutomaticEnv()
-	config.SetEnvPrefix(prefix)
-	config.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+	viper.SetConfigName("config")
+	viper.AddConfigPath(".")
+	viper.AddConfigPath("conf")
+	viper.AddConfigPath("config")
+	viper.SetConfigType(fileType)
+	viper.AutomaticEnv()
+	viper.SetEnvPrefix(prefix)
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 }
 
 func FromFile(filename string, prefix string) {
 	Setup(strings.Replace(filepath.Ext(filename), ".", "", 1), prefix)
-	config.SetConfigFile(filename)
+	viper.SetConfigFile(filename)
 }

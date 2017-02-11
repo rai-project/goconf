@@ -9,7 +9,7 @@ func TestFromFile(t *testing.T) {
 	}
 	c := new(testStringConfig)
 	FromFile("config.json", "APP")
-	GetConfig(c)
+	Fill(c)
 	if c.SomeHostname != "127.0.0.1" {
 		t.Errorf("c.SomeHostname == %q, want %q", c.SomeHostname, "127.0.0.1")
 	}
